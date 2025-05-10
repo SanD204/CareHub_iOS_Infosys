@@ -187,7 +187,7 @@ struct MyPatientsView: View {
                             
                             let patient = Patient(
                                 name: name,
-                                visitDate: "Last visit: \(visitDateString)",
+                                visitDate: "visit: \(visitDateString)",
                                 patientId: patientId
                             )
                             fetchedPatients.append(patient)

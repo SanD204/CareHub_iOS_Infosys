@@ -1,6 +1,5 @@
 import SwiftUI
 import FirebaseAuth
-
 struct LoginView: View {
     enum Role { case patient, staff }
     @State private var selectedRole: Role = .patient
@@ -21,12 +20,13 @@ struct LoginView: View {
                 loginContent
             }
         }
+        .environment(\.colorScheme, .light)
     }
     
     private var loginContent: some View {
         NavigationStack {
             ZStack {
-                // Background gradient
+                // Background gradient with explicit colors
                 LinearGradient(
                     colors: [
                         Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.4),
@@ -44,7 +44,7 @@ struct LoginView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("CareHub")
                             .font(.system(size: 48, weight: .bold))
-                            .foregroundColor(.black)
+                            .foregroundColor(.black) // Explicit color
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 20)
@@ -57,6 +57,7 @@ struct LoginView: View {
                     }
                     .pickerStyle(.segmented)
                     .padding(.horizontal, 20)
+                    .accentColor(Color(red: 0.43, green: 0.34, blue: 0.99)) // Explicit color for picker
                     
                     // Form fields
                     VStack(spacing: 20) {
@@ -163,6 +164,7 @@ struct LoginView: View {
     var dashboardContent: some View {
         if authManager.isLoading {
             ProgressView("Loading dashboard...")
+                .environment(\.colorScheme, .light) // Force light mode
         } else {
             // Patient View
             if selectedRole == .patient {
@@ -170,6 +172,7 @@ struct LoginView: View {
                     NavigationStack {
                         PatientTabView(username: patient.userData.Name, patient: patient)
                     }
+                    .environment(\.colorScheme, .light) // Force light mode
                 } else {
                     noDataFoundView(message: "No patient data found")
                 }
@@ -179,6 +182,7 @@ struct LoginView: View {
                 NavigationStack {
                     DoctorTabView()
                 }
+                .environment(\.colorScheme, .light) // Force light mode
             }
             // Other Staff Views
             else if selectedRole == .staff, let staff = authManager.currentStaffMember {
@@ -187,18 +191,22 @@ struct LoginView: View {
                     NavigationStack {
                         AdminTabView()
                     }
+                    .environment(\.colorScheme, .light) // Force light mode
                 case .nurse:
                     NavigationStack {
                         NurseTabView(nurseId: staff.id ?? "")
                     }
+                    .environment(\.colorScheme, .light) // Force light mode
                 case .labTechnician:
                     NavigationStack {
                         LabTechTabView()
                     }
+                    .environment(\.colorScheme, .light) // Force light mode
                 case .accountant:
                     NavigationStack {
                         AccountantDashboard(accountantId: staff.id ?? "KV93GmJ9k9VtzHtx0M8p1fH30Mf2")
                     }
+                    .environment(\.colorScheme, .light) // Force light mode
                 default:
                     noDataFoundView(message: "Role not implemented")
                 }
@@ -215,12 +223,27 @@ struct LoginView: View {
         VStack {
             Text(message)
                 .padding()
+                .foregroundColor(.black) // Explicit color
             Button("Try Again") {
                 authManager.logout()
                 authManager.navigateToDashboard = false
             }
             .buttonStyle(.borderedProminent)
+            .tint(Color(red: 0.43, green: 0.34, blue: 0.99)) // Explicit color
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.4),
+                    Color(red: 0.94, green: 0.94, blue: 1.0),
+                    Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.4)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .environment(\.colorScheme, .light) // Force light mode
     }
     
     private func login() {

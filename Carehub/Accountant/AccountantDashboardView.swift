@@ -1,40 +1,27 @@
-//
-//  AccountantDashboardView.swift
-//  Carehub
-//
-//  Created by user@87 on 22/04/25.
-//
-
 import SwiftUI
 
 struct AccountantDashboard: View {
     @State private var selectedTab = 0
     @StateObject private var viewModel = AccountantViewModel()
-    let primaryColor = Color(hex: "6d57fc")
+    let primaryColor = Color(red: 0.43, green: 0.34, blue: 0.99)
     let accountantId: String
-    
-    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationView {
                 ZStack {
-                    if colorScheme == .dark {
-                        Color(.systemBackground)
-                            .edgesIgnoringSafeArea(.all)
-                    } else {
-                        LinearGradient(
-                            colors: [
-                                Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.1),
-                                Color(.systemBackground).opacity(0.9),
-                                Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.1)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                        .edgesIgnoringSafeArea(.all)
-                    }
-                  
+
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.1),
+                            Color(red: 0.94, green: 0.94, blue: 1.0).opacity(0.9),
+                            Color(red: 0.43, green: 0.34, blue: 0.99).opacity(0.1)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    .edgesIgnoringSafeArea(.all)
+                    
                     ScrollView {
                         VStack(alignment: .leading, spacing: 24) {
                             VStack(alignment: .leading, spacing: 8) {
@@ -47,18 +34,18 @@ struct AccountantDashboard: View {
                                     Text("Hi, \(accountant.name)")
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
-                                        .foregroundColor(.primary)
+                                        .foregroundColor(.black)
                                     Text("Receptionist")
-                                               .font(.title3)
-                                               .foregroundColor(.secondary)
+                                        .font(.title3)
+                                        .foregroundColor(.gray)
                                 } else {
                                     Text("Welcome")
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .foregroundColor(primaryColor)
                                     Text("Receptionist")
-                                               .font(.title3)
-                                               .foregroundColor(.secondary)
+                                        .font(.title3)
+                                        .foregroundColor(.gray)
                                 }
                             }
                             .padding(.horizontal, 24)
@@ -92,7 +79,7 @@ struct AccountantDashboard: View {
                     }
                 }
                 .navigationBarHidden(true)
-                .tint(.purple)
+                .tint(primaryColor) // Sets navigation tint to purple
                 .onAppear {
                     viewModel.fetchAccountant(byAccountantId: accountantId)
                 }
@@ -108,6 +95,8 @@ struct AccountantDashboard: View {
                 }
                 .tag(1)
         }
+        .tint(primaryColor) // Sets selected tab bar item color to purple
+        .environment(\.colorScheme, .light) // Force light mode for consistent colors
     }
 }
 
@@ -115,8 +104,6 @@ struct AccountantCard: View {
     let title: String
     let icon: String
     let color: Color
-    
-    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -131,14 +118,13 @@ struct AccountantCard: View {
             Text(title)
                 .font(.title2)
                 .fontWeight(.semibold)
-                .foregroundColor(.primary)
-                .padding(.top, 8)
+                .foregroundColor(.black) // Explicit color for light mode
         }
         .padding(16)
         .frame(maxWidth: .infinity, minHeight: 140, alignment: .topLeading)
-        .background(Color(.secondarySystemBackground))
+        .background(Color(red: 0.98, green: 0.98, blue: 0.98)) // Light gray background for card
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.2 : 0.05), radius: 8, x: 0, y: 4)
+        .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
     }
 }
 

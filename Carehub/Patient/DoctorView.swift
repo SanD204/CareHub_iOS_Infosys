@@ -101,7 +101,7 @@ struct DoctorView: View {
                                     .padding(.leading, 12)
                                     .accessibilityHidden(true)
                                 
-                                TextField("Search by symptom, specialty, or doctor name", text: $searchText)
+                                TextField("Search by symptoms, specialty, or doctor name", text: $searchText)
                                     .font(FontSizeManager.font(for: 16))
                                     .padding(.vertical, 12)
                                     .accessibilityLabel("Search")
@@ -207,6 +207,7 @@ struct DoctorView: View {
             .onDisappear {
                 speechSynthesizer.stopSpeaking(at: .immediate)
             }
+            .navigationTitle(Text("Doctor Search"))
         }
     }
 
@@ -566,14 +567,13 @@ struct DoctorDetailView: View {
     let doctor: Doctor
     let specialty: String
     let patientId: String
-    @State private var qualifications: [String] = ["MBBS", "MD - General Medicine", "DNB - Cardiology"]
+    @State private var qualifications: [String] = ["MBBS", "MD - General Medicine"]
     @AppStorage("isVoiceOverEnabled") private var isVoiceOverEnabled = false
     @State private var speechSynthesizer = AVSpeechSynthesizer()
 
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // Hero Card with doctor info
                 VStack {
                     HStack(alignment: .top, spacing: 20) {
                         // Left side - Image

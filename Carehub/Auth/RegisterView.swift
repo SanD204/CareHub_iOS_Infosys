@@ -116,8 +116,8 @@ struct RegisterView: View {
     
     private let purpleColor = Color(red: 0.43, green: 0.34, blue: 0.99)
     private let gradientColors = [
-        Color(red: 0.43, green: 0.34, blue: 0.99),
-        Color(red: 0.55, green: 0.48, blue: 0.99)
+        Color(red: 0.43, green: 0.34, blue: 0.99)
+//        Color(red: 0.55, green: 0.48, blue: 0.99)
     ]
     
     private var computedFullName: String {

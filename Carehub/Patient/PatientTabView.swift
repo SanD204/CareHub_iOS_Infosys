@@ -24,7 +24,7 @@ struct PatientTabView: View {
             DoctorView(patientId: patient.patientId)
                 .tabItem {
                     Image(systemName: "stethoscope")
-                    Text("Doctor")
+                    Text("Appointment")
                 }
             
             SettingsView_patient(patient: patient)

@@ -1,10 +1,3 @@
-//
-//  GeminiService.swift
-//  Carehub
-//
-//  Created by Yash Gupta on 08/05/25.
-//
-
 import Foundation
 import Network
 
@@ -35,33 +28,28 @@ class GeminiService {
         }
         monitor.start(queue: queue)
     }
-    
     func sendMessage(_ text: String) async throws -> String {
         guard isNetworkAvailable else {
             throw NSError(domain: "NetworkError", code: -1009, userInfo: [
                 NSLocalizedDescriptionKey: "No internet connection"
             ])
         }
-        
         guard !apiKey.isEmpty, apiKey.starts(with: "AIza") else {
             throw NSError(domain: "GeminiError", code: 1, userInfo: [
                 NSLocalizedDescriptionKey: "Invalid API key format"
             ])
         }
-        
         let urlString = "\(apiEndpoint)\(modelName):generateContent?key=\(apiKey)"
         guard let url = URL(string: urlString) else {
             throw NSError(domain: "GeminiError", code: 2, userInfo: [
                 NSLocalizedDescriptionKey: "Invalid URL"
             ])
         }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        // Define the system prompt for concise, professional responses
+
         let systemPrompt = """
         You are a professional healthcare assistant chatbot for a healthcare management app. Help users understand their symptoms and suggest the most appropriate medical department to consult from the following: General Practitioner, Cardiology, Orthopedics, Neurology, Gynecology, Surgery, Dermatology, Endocrinology, ENT, Oncology, Psychiatry, Urology, Pediatrics. Use the following guidelines:
         - For common symptoms like fever, cough, or fatigue, suggest "Pediatrics".
@@ -76,8 +64,6 @@ class GeminiService {
         - For child-related symptoms, suggest Pediatrics.
         Provide concise responses (2-3 lines max), focusing on general guidance and the appropriate department. Do not provide medical diagnoses or treatments. Always include a disclaimer to consult a healthcare professional. Be empathetic and professional.
         """
-        
-        // Prepend the system prompt to the user's input
         let combinedText = "\(systemPrompt)\n\nUser: \(text)"
         
         let requestBody: [String: Any] = [

@@ -306,7 +306,6 @@ struct ScheduleAppointmentView: View {
             .padding(.horizontal, 20)
         }
     }
-    
     private var timeSlotSelectionSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
@@ -319,7 +318,6 @@ struct ScheduleAppointmentView: View {
                     .foregroundColor(.black)
             }
             .padding(.horizontal, 20)
-            
             VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 8) {
                     Image(systemName: "calendar.badge.clock")

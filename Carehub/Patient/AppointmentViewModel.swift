@@ -125,6 +125,5 @@ class AppointmentViewModel: ObservableObject {
             print("❌ Error fetching medical tests: \(error.localizedDescription)")
         }
     }
-
-
 }
+

@@ -52,11 +52,11 @@ struct NurseProfileView: View {
                     Section(header: Text("Shift Information")) {
                         LabeledContent(
                             label: "Start Time",
-                            content: formattedTime(from: nurse.shift?.startTime)
+                            content: "9:00 AM"
                         )
                         LabeledContent(
                             label: "End Time",
-                            content: formattedTime(from: nurse.shift?.endTime)
+                            content: "5:00 PM"
                         )
                     }
                     
